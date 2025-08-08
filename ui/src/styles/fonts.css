@@ -1,0 +1,38 @@
+/* styles/fonts.css */
+
+@font-face {
+  font-family: 'KissAndTell';
+  src: url('/fonts/KissAndTell/buddychampion.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BuddyChampion';
+  src: url('/fonts/BuddyChampion/buddychampion.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BuddyChampion';
+  src: url('/fonts/BuddyChampion/buddychampionbold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BuddyChampion';
+  src: url('/fonts/BuddyChampion/buddychampionital.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'BuddyChampion';
+  src: url('/fonts/BuddyChampion/buddychampionboldital.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* Add additional font-face definitions for other styles as needed */
