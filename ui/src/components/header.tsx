@@ -52,72 +52,18 @@ export default function Header() {
 
   return (
     <>
-      <header className="w-full">
-        <Grid className="pt-4 w-full bg-appBackground pb-[22px]">
-          <div className="flex col-span-8 justify-between items-center">
-            <Image src="/logo.png" width={74} height={58} alt="Meme VC Logo" />
-            <div className="flex gap-3">
-              <PrimaryButton
-                className="bg-[var(--yellow)]"
-                // onPress={handleCreateCoin}
-                disabled={isBlocked}
-              >
-                Create Coin
-                {/* <PlusIcon /> */}
-              </PrimaryButton>
-              <PrimaryButton
-                className="bg-[var(--blue)]"
-                onPress={() => setIsDemoModalOpen(true)}
-              >
-                WTF is This?
-              </PrimaryButton>
-            </div>
+      <header className="relative z-10 m-4 p-6 rounded-lg">
+        <div className="flex justify-between items-center">
+          <div>
+            <Image src="/logo-full.png" alt="logo" width={50} height={100} />
           </div>
-          <div className="flex col-span-4 justify-between items-center">
-            {/* {status === 'connected' && address && (
-              <div className="flex gap-3 items-center text-xs">
-                <Avatar
-                  isBordered
-                  as="button"
-                  className="transition-transform"
-                  color="primary"
-                  name={address}
-                  size="sm"
-                  src={walletInfo?.icon}
-                />
-                <p>{shortenAddress(address)}</p>
-              </div>
-            )} */}
-            <div className="flex w-full justify-end">
-              {/* <ConnectButton /> */}
-            </div>
-            <PrimaryButton
-              className="bg-yellow"
-              // onPress={handleCreateCoin}
-              disabled={isBlocked}
-            >
+          <div className="flex items-center space-x-4">
+            <PrimaryButton className="px-6 py-2 rounded text-white neon-border border-2 font-bold">
               Connect Wallet
-              {/* <PlusIcon /> */}
             </PrimaryButton>
           </div>
-        </Grid>
+        </div>
       </header>
-      {/* <CreateCoinModal
-        isOpen={isCreateCoinModalOpen}
-        onClose={() => setIsCreateCoinModalOpen(false)}
-        onBlock={handleBlock}
-      />
-      <CreatePendingTokenModal
-        isOpen={isCreatePendingTokenModalOpen}
-        onClose={() => setIsCreatePendingTokenModalOpen(false)}
-        onBlock={handleBlock}
-        isBlocked={isBlocked}
-        onUnblock={handleUnblock}
-      />
-      <DemoModal
-        isOpen={isDemoModalOpen}
-        onClose={() => setIsDemoModalOpen(false)}
-      /> */}
     </>
   );
 }
