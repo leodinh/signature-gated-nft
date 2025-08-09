@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import NFTCard from '@/components/NFTCard';
+import { useState, useCallback } from 'react';
+import NFTCard from '@/components/nft-card';
 import Header from '@/components/header';
-import { Tabs, Tab } from '@heroui/react';
+import { Tabs, Tab, useDisclosure } from '@heroui/react';
+import ConfirmationModal from '@/components/confirmation-modal';
 
 interface NFT {
   id: number;
@@ -14,8 +15,8 @@ interface NFT {
   tokenURI: string;
   active: boolean;
 }
-
 export default function Home() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [nfts, setNfts] = useState<NFT[]>([
     {
       id: 1,
@@ -59,23 +60,20 @@ export default function Home() {
   const [isMinting, setIsMinting] = useState(false);
   const [mintStatus, setMintStatus] = useState('');
   const [activeTab, setActiveTab] = useState<'my' | 'mintable'>('mintable');
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
   const myCats = nfts.filter(n => !n.active);
   const mintableCats = nfts.filter(n => n.active);
   const displayed = activeTab === 'my' ? myCats : mintableCats;
 
-  const handleMint = async (nft: NFT) => {
-    setSelectedNFT(nft);
+  const performMint = useCallback(async (nft: NFT) => {
     setIsMinting(true);
     setMintStatus('Preparing transaction...');
-
-    // Simulate minting process
     setTimeout(() => {
       setMintStatus('Minting in progress...');
       setTimeout(() => {
         setMintStatus('NFT minted successfully!');
         setIsMinting(false);
-        // Update NFT status
         setNfts(prev =>
           prev.map(item =>
             item.id === nft.id ? { ...item, active: false } : item
@@ -84,35 +82,25 @@ export default function Home() {
         setSelectedNFT(null);
       }, 2000);
     }, 1000);
-  };
+  }, []);
 
   return (
     <div className="cyber-bg min-h-screen cyber-grid">
-      {/* Animated background grid */}
-      <div className="absolute inset-0 cyber-grid opacity-20"></div>
-
       <div className="container mx-auto">
-        {/* Header */}
         <Header />
-
-        {/* Main content */}
-        <main className="container relative z-10 mx-auto px-4 py-8">
-          {/* Hero section */}
+        <main className="container z-10 mx-auto px-4 py-8">
           <section className="text-center mb-12">
             <h2 className="neon-text text-6xl font-bold font-buddy mb-4">
               ADOPT YOUR <span className="text-white">CYBER CAT</span>
             </h2>
           </section>
 
-          {/* Tabs */}
           <section className="mb-8">
             <Tabs
               aria-label="Cats tabs"
               selectedKey={activeTab}
               onSelectionChange={key => setActiveTab(key as 'my' | 'mintable')}
-              color="primary"
-              variant="underlined"
-              className="text-lg font-bold font-mono w-full lg:w-[50%] mx-auto"
+              className="text-lg font-bold font-mono mx-auto"
             >
               <Tab
                 key="mintable"
@@ -131,7 +119,6 @@ export default function Home() {
             </Tabs>
           </section>
 
-          {/* NFT Grid */}
           <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {displayed.length === 0 ? (
               <div className="col-span-full text-center text-gray-300 font-mono">
@@ -148,7 +135,10 @@ export default function Home() {
                 >
                   <NFTCard
                     nft={nft}
-                    onMint={handleMint}
+                    onMint={() => {
+                      setSelectedNFT(nft);
+                      onOpen();
+                    }}
                     isMinting={isMinting}
                     selectedNFTId={selectedNFT?.id}
                   />
@@ -158,6 +148,13 @@ export default function Home() {
           </section>
         </main>
       </div>
+
+      <ConfirmationModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        nft={selectedNFT}
+        onConfirm={() => performMint(selectedNFT as NFT)}
+      />
     </div>
   );
 }

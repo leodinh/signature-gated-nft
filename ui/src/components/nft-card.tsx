@@ -48,7 +48,7 @@ export default function NFTCard({
           <button
             onClick={() => onMint(nft)}
             disabled={!nft.active || isMinting}
-            className={`cyber-button font-buddy text-lg px-6 py-2 rounded text-white font-bold transition-all duration-300 ${
+            className={`cyber-button font-buddy text-lg px-6 py-2 rounded text-white font-bold transition-all duration-300 cursor-pointer ${
               !nft.active || isMinting
                 ? 'opacity-50 cursor-not-allowed'
                 : 'hover:scale-105'
